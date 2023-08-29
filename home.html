@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="assets/css/reset.css">
 </head>
 <body>
-    
+    <h1>Minha Lista de Tarefas</h1>
+    <form action="exibir_tarefas.php" method="post">
+        <input type="text" name="nova_tarefa" placeholder="Nova Tarefa">
+        <button type="submit">Adicionar</button>
+    </form>
+    <h2>Tarefas:</h2>
+    <?php include 'exibir_tarefas.php'; ?>
 </body>
 </html>
