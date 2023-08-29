@@ -1,0 +1,28 @@
+header{
+    background-color: rgb(0, 115, 115);
+    padding: 1px;
+    height: 80px;
+}
+
+a{
+    font-size: 40px;
+    color: white;
+}
+
+.nav{
+    display: flex;
+    gap: 30%;
+    align-items: center;
+    justify-content: center;
+    list-style-type: none;
+    padding: 0;
+}
+
+.add_task{
+    display: contents;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    
+}

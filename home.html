@@ -9,12 +9,31 @@
     <link rel="stylesheet" href="assets/css/reset.css">
 </head>
 <body>
-    <h1>Minha Lista de Tarefas</h1>
-    <form action="exibir_tarefas.php" method="post">
-        <input type="text" name="nova_tarefa" placeholder="Nova Tarefa">
-        <button type="submit">Adicionar</button>
-    </form>
-    <h2>Tarefas:</h2>
-    <?php include 'exibir_tarefas.php'; ?>
+
+    <header>
+        <div>
+            <ul class="nav">
+              <li><img src="assets/icons/icon_saida.png" alt="" href="index.html"></li>
+              <li><a href="index.html">TASKEASY</a></li>
+              <li><img src="assets/icons/icon_perfil.png" alt=""></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="add_task">
+        
+        <div class="input_task">
+            <input type="text" id="novaTarefa" placeholder="Digite uma nova tarefa">
+        </div>
+
+        <div class="button_add">
+            <button id="adicionarBtn">Adicionar</button>
+        </div>
+
+    </div>
+
+    <ul id="listaTarefas">
+    </ul>
+    <script src="js/checklist.js"></script>
 </body>
 </html>
