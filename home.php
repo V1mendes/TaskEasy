@@ -1,9 +1,19 @@
 <?php
-$tarefas = array();
+$tarefasPendentes = array(); // Lista de tarefas pendentes
+$tarefasConcluidas = array(); // Lista de tarefas concluídas
 
 // Carrega as tarefas do arquivo
 if (file_exists("tarefas.txt")) {
     $tarefas = file("tarefas.txt", FILE_IGNORE_NEW_LINES);
+
+    // Separa as tarefas pendentes das concluídas
+    foreach ($tarefas as $index => $tarefa) {
+        if (strpos($tarefa, "[Concluída]") === 0) {
+            $tarefasConcluidas[] = substr($tarefa, strlen("[Concluída]"));
+        } else {
+            $tarefasPendentes[] = $tarefa;
+        }
+    }
 }
 
 // Verifica se o formulário foi submetido
@@ -11,29 +21,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtém a nova tarefa do formulário
     $novaTarefa = $_POST["novaTarefa"];
 
-    // Adicione a nova tarefa ao array de tarefas
+    // Adiciona a nova tarefa às pendentes
     if (!empty($novaTarefa)) {
-        $tarefas[] = $novaTarefa;
+        $tarefasPendentes[] = $novaTarefa;
 
-        // Salva as tarefas no arquivo
-        file_put_contents("tarefas.txt", implode("\n", $tarefas));
+        // Salva as tarefas pendentes no arquivo
+        file_put_contents("tarefas.txt", implode("\n", $tarefasPendentes));
     }
 
-    // Lógica para limpar as tarefas selecionadas se o botão for clicado
+    // Lógica para limpar as tarefas concluídas selecionadas se o botão for clicado
     if (isset($_POST["limparTarefasSelecionadas"])) {
-        // Obtém as tarefas selecionadas
-        $tarefasSelecionadas = $_POST["tarefasSelecionadas"];
+        // Verifica se $_POST["tarefasSelecionadas"] está definido e é uma matriz
+        if (isset($_POST["tarefasSelecionadas"]) && is_array($_POST["tarefasSelecionadas"])) {
+            // Obtém as tarefas concluídas selecionadas
+            $tarefasSelecionadas = $_POST["tarefasSelecionadas"];
 
-        // Filtra as tarefas originais, mantendo apenas as não selecionadas
-        $tarefas = array_filter($tarefas, function ($index) use ($tarefasSelecionadas) {
-            return !in_array($index, $tarefasSelecionadas);
-        }, ARRAY_FILTER_USE_KEY);
+            // Remove as tarefas concluídas selecionadas do array
+            foreach ($tarefasSelecionadas as $index) {
+                unset($tarefasConcluidas[$index]);
+            }
 
-        // Salva as tarefas não selecionadas no arquivo
-        file_put_contents("tarefas.txt", implode("\n", $tarefas));
+            // Salva as tarefas concluídas restantes no arquivo
+            file_put_contents("tarefas.txt", implode("\n", $tarefasPendentes) . "\n" . implode("\n", $tarefasConcluidas));
+        }
     }
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -96,11 +110,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
       </div>
     </div>
-    <form action="" method="post"class="task_select">
+    <form action="" method="post" class="task_select">
         
       <button type="submit" name="limparTarefasSelecionadas">Limpar Tarefas Concluídas</button>
           
-      <input type="hidden" name="tarefasSelecionadas[]" value="">
+      <?php
+      // Verifica se $_POST["tarefasSelecionadas"] está definido e é uma matriz
+      if (isset($_POST["tarefasSelecionadas"]) && is_array($_POST["tarefasSelecionadas"])) {
+          // Adicione os índices das tarefas selecionadas como inputs hidden
+          foreach ($_POST["tarefasSelecionadas"] as $index) {
+              echo '<input type="hidden" name="tarefasSelecionadas[]" value="' . $index . '">';
+          }
+      }
+      ?>
       
     </form>
     <script>
