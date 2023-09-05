@@ -1,28 +1,81 @@
-header{
-    background-color: rgb(0, 115, 115);
-    padding: 1px;
-    height: 80px;
+nav{
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  background-color: #026873;
+  height: 80px;
+  
 }
 
-a{
-    font-size: 40px;
-    color: white;
+.nav_title{
+  font-size:30px;
+  list-style-type: none;
+  color: white;
+  font-weight: bold;
+  
+}.add_task{
+  padding:30px;
+  text-align:center;
+  list-style-type: none;
+}
+.add_task>input{
+  width: 400px;
+  height:40px;
+  border-radius:10px;
+  padding: 10px;
+  
 }
 
-.nav{
-    display: flex;
-    gap: 30%;
-    align-items: center;
-    justify-content: center;
-    list-style-type: none;
-    padding: 0;
+.add_task>button{
+  background:#2D83A6;
+  color:white;
+  width: 100px;
 }
 
-.add_task{
-    display: contents;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    width: 80%;
-    
+.task_select{
+  padding:30px;
+  text-align:center;
+  list-style-type: none;
+  
+}
+
+.task_list{
+  list-style-type: none;
+}
+
+
+.conteiner{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+}
+
+.conteiner_pendentes{
+  justify-content:center;
+  text-align: center;
+  border: 2px solid #026873;
+  width:40%;
+  height:auto;
+  padding:20px;
+  gap: 0px 20px;
+  border-radius:10px;
+  
+}
+.conteiner_concluidas{
+  justify-content:center;
+  text-align: center;
+  border: 2px solid #026873;
+  width:40%;
+  height:auto;
+  padding:20px;
+  border-radius:10px;
+  
+}
+
+button{
+  width:auto;
+  height:40px;
+  padding:5px;
+  border-radius:10px;
+  font-size: 15px;
 }

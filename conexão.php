@@ -1,11 +1,16 @@
 <?php
-$servidor ="2020"; 
-$usuario = "C:/TRABALHOS/servidorTaskEasy/Maturidade_de_soft";
-$senha = ""; 
-$dbname = "cadastro"; // nome do banco de dados 
 
-$conexao = mysqli_connect($dbname);
-if (!$conexao) {
-    die("Houve um erro: " . mysqli_connect_error());
-}
+    $host = "localhost";
+    $user= "root";
+    $db_password="";
+    $db_name = "cadastro";
+    
+
+    try{
+     $conn =  new PDO("mysql:host=$host; dbname=" . $db_name, $user, $db_password );
+    } catch (PDOException $err) {
+        echo "Erro conexão" . $err->getMessage();
+    }
+
+
 ?>
