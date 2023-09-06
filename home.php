@@ -1,54 +1,28 @@
 <?php
-$tarefasPendentes = array(); // Lista de tarefas pendentes
-$tarefasConcluidas = array(); // Lista de tarefas concluídas
+$tarefasPendentes = array();
 
-// Carrega as tarefas do arquivo
 if (file_exists("tarefas.txt")) {
     $tarefas = file("tarefas.txt", FILE_IGNORE_NEW_LINES);
 
-    // Separa as tarefas pendentes das concluídas
-    foreach ($tarefas as $index => $tarefa) {
-        if (strpos($tarefa, "[Concluída]") === 0) {
-            $tarefasConcluidas[] = substr($tarefa, strlen("[Concluída]"));
-        } else {
-            $tarefasPendentes[] = $tarefa;
-        }
+    foreach ($tarefas as $tarefa) {
+        $tarefasPendentes[] = $tarefa;
     }
 }
 
-// Verifica se o formulário foi submetido
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtém a nova tarefa do formulário
-    $novaTarefa = $_POST["novaTarefa"];
 
-    // Adiciona a nova tarefa às pendentes
-    if (!empty($novaTarefa)) {
-        $tarefasPendentes[] = $novaTarefa;
+    if (isset($_POST["novaTarefa"])) {
 
-        // Salva as tarefas pendentes no arquivo
-        file_put_contents("tarefas.txt", implode("\n", $tarefasPendentes));
-    }
+        $novaTarefa = $_POST["novaTarefa"];
 
-    // Lógica para limpar as tarefas concluídas selecionadas se o botão for clicado
-    if (isset($_POST["limparTarefasSelecionadas"])) {
-        // Verifica se $_POST["tarefasSelecionadas"] está definido e é uma matriz
-        if (isset($_POST["tarefasSelecionadas"]) && is_array($_POST["tarefasSelecionadas"])) {
-            // Obtém as tarefas concluídas selecionadas
-            $tarefasSelecionadas = $_POST["tarefasSelecionadas"];
+        if (!empty($novaTarefa)) {
+            $tarefasPendentes[] = $novaTarefa;
 
-            // Remove as tarefas concluídas selecionadas do array
-            foreach ($tarefasSelecionadas as $index) {
-                unset($tarefasConcluidas[$index]);
-            }
-
-            // Salva as tarefas concluídas restantes no arquivo
-            file_put_contents("tarefas.txt", implode("\n", $tarefasPendentes) . "\n" . implode("\n", $tarefasConcluidas));
+            file_put_contents("tarefas.txt", implode("\n", $tarefasPendentes));
         }
     }
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -63,101 +37,76 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-
     <nav>
         <ul class="nav_title">
             <li>TASKEASY</li>
         </ul>
     </nav>
-    
 
     <form action="" method="post" class="add_task">
-      
         <input type="text" id="novaTarefa" name="novaTarefa" placeholder="Digite uma nova tarefa">
-      
         <button id="adicionarBtn">Adicionar</button>
-      
     </form>
 
     <div class=conteiner>
-  
-      <div class = "conteiner_pendentes">
-      
-        <p>Tarefas Pendentes</p>
-        
-          <ul id="tarefasOriginais" class="task_list">
-            
-              <?php
-              foreach ($tarefas as $index => $tarefa) {
-                  echo '<li data-concluida="false">';
-                  echo '<input type="checkbox" class="checkbox-tarefa" data-index="' . $index . '">';
-                  echo $tarefa;
-                  echo '</li>';
-              }
-              ?>
-      
-          </ul>
-      </div>
-  
-      <div class = "conteiner_concluidas">
-        
-        <p>Tarefas Concluídas</p>
-      
-        <ul id="tarefasSelecionadas" class="task_list">
-            <!-- Aqui é onde as tarefas selecionadas serão movidas via JavaScript -->
-        </ul>
-    
-  
-      </div>
+        <div class="conteiner_pendentes">
+            <p>Tarefas Pendentes</p>
+            <ul id="tarefasOriginais" class="task_list">
+                <?php
+                foreach ($tarefasPendentes as $index => $tarefa) {
+                    echo '<li>';
+                    echo '<input type="checkbox" class="checkbox-tarefa" data-index="' . $index . '">';
+                    echo $tarefa;
+                    echo '</li>';
+                }
+                ?>
+            </ul>
+        </div>
+
+        <div class="conteiner_concluidas">
+            <p>Tarefas Concluídas</p>
+            <ul id="tarefasSelecionadas" class="task_list">
+
+            </ul>
+            <button id="excluirTarefasBtn">Excluir</button>
+        </div>
+
+
+
     </div>
-    <form action="" method="post" class="task_select">
-        
-      <button type="submit" name="limparTarefasSelecionadas">Limpar Tarefas Concluídas</button>
-          
-      <?php
-      // Verifica se $_POST["tarefasSelecionadas"] está definido e é uma matriz
-      if (isset($_POST["tarefasSelecionadas"]) && is_array($_POST["tarefasSelecionadas"])) {
-          // Adicione os índices das tarefas selecionadas como inputs hidden
-          foreach ($_POST["tarefasSelecionadas"] as $index) {
-              echo '<input type="hidden" name="tarefasSelecionadas[]" value="' . $index . '">';
-          }
-      }
-      ?>
-      
-    </form>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const checkboxTarefas = document.querySelectorAll(".checkbox-tarefa");
             const tarefasOriginaisList = document.getElementById("tarefasOriginais");
             const tarefasSelecionadasList = document.getElementById("tarefasSelecionadas");
+            const excluirTarefasBtn = document.getElementById("excluirTarefasBtn");
 
             checkboxTarefas.forEach(function (checkbox) {
                 checkbox.addEventListener("change", function () {
                     const listItem = this.parentNode;
-                    const isConcluida = listItem.getAttribute("data-concluida") === "true";
 
                     if (this.checked) {
-                        if (isConcluida) {
-                            this.checked = true; // Impede que tarefas concluídas sejam movidas de volta
-                        } else {
-                            listItem.setAttribute("data-concluida", "true");
-                            tarefasSelecionadasList.appendChild(listItem);
-                        }
+                        listItem.remove();
+                        tarefasSelecionadasList.appendChild(listItem);
                     } else {
-                        if (isConcluida) {
-                            this.checked = true; // Impede que tarefas concluídas sejam movidas de volta
-                        } else {
-                            listItem.setAttribute("data-concluida", "false");
-                            tarefasOriginaisList.appendChild(listItem);
-                        }
+                        listItem.remove();
+                        tarefasOriginaisList.appendChild(listItem);
                     }
+                });
+            });
+
+            excluirTarefasBtn.addEventListener("click", function () {
+                const tarefasSelecionadas = document.querySelectorAll(".checkbox-tarefa:checked");
+
+                tarefasSelecionadas.forEach(function (checkbox) {
+                    const listItem = checkbox.parentNode;
+                    listItem.remove();
                 });
             });
         });
 
     </script>
-
-
 </body>
 
 </html>

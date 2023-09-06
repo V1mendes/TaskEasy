@@ -14,9 +14,11 @@ nav{
   font-weight: bold;
   
 }.add_task{
+  
   padding:30px;
   text-align:center;
   list-style-type: none;
+
 }
 .add_task>input{
   width: 400px;
@@ -41,6 +43,7 @@ nav{
 
 .task_list{
   list-style-type: none;
+  
 }
 
 
