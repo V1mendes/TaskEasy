@@ -1,16 +1,14 @@
 <?php
+$servidor = "localhost";
+$usuario = "root";
+$senha = "";
+$db_name = "cadastro";
+$conexao=mysqli_connect($servidor, $usuario, $senha, $db_name);
 
-    $host = "localhost";
-    $user= "root";
-    $db_password="";
-    $db_name = "cadastro";
-    
+if(!$conexao){
+ die("Houve um erro: ".mysqli_connect_error());
+}
 
-    try{
-     $conn =  new PDO("mysql:host=$host; dbname=" . $db_name, $user, $db_password );
-    } catch (PDOException $err) {
-        echo "Erro conexão" . $err->getMessage();
-    }
-
+var_dump($_POST);
 
 ?>

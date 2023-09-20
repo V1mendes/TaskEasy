@@ -1,27 +1,40 @@
-body{
-    font-family: Arial, Helvetica, sans-serif;
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-header{
-    background-color: rgb(0, 115, 115);
-    padding: 1px;
+body {
+    background: #ffffff;
+    color: #000000;
+
 }
 
-li{
+header {
+    background: #026873;
+    height: 80px;
+    padding: 40px;
     display: flex;
-    list-style-type: none;
-    align-items: flex-start;
+    justify-content: space-between;
+    align-items: center;
+
 }
 
-a{
+.logo {
+    font-size: 30px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a {
     color: rgb(255, 255, 255);
     text-decoration: none;
     font-size: 20px;
     font-weight: bold;
 }
 
-.center{
+.center {
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -30,33 +43,40 @@ a{
     min-height: 65vh;
 }
 
-h1{
+h1 {
     padding-bottom: 40px;
     padding-top: 80px;
 }
 
-input{
-    height: 30px;
-    margin: 20px;
-    padding: 8px;
+input {
+    height: 40px;
+    width: auto;
+    border-radius: 10px;
+    padding: 10px;
+
 }
-#Cadastro{
+
+#Cadastro {
     cursor: pointer;
     margin-top: 20px;
     width: 140px;
     height: 35px;
 }
+
 #campos {
     text-align: center;
     position: relative;
     width: 50%;
-    margin: 0 auto; /* Centraliza horizontalmente o container #campos */
+    margin: 0 auto;
+    /* Centraliza horizontalmente o container #campos */
 }
-#senha-container{
+
+#senha-container {
     position: relative;
     display: flex;
     align-items: center;
 }
+
 #eyeButton {
     width: 20px;
     height: 18px;
@@ -68,9 +88,9 @@ input{
     border: none;
     cursor: pointer;
 }
-#senha{ 
+
+#senha {
     width: calc(100% - 30px);
     height: 30px;
-    margin: 20px;
     padding: 8px;
 }

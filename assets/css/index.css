@@ -12,33 +12,30 @@ body {
 
 .header {
     position: fixed;
-    top: 0;
-    left: 0;
+    height: 80px;
     width: 100%;
-    padding: 20px 10%;
+    padding: 40px;
     background: #026873;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 100;
-
 
 }
 
 .logo {
-    font-size: 25px;
-    color: rgb(255, 255, 255);
+    font-size: 30px;
+    color: white;
     text-decoration: none;
-    font-weight: 700;
+    font-weight: bold;
 
 
 }
 
 .navbar a {
-    font-size: 20px;
+    font-size: 18px;
     color: rgb(255, 255, 255);
     text-decoration: none;
-    font-weight: 500;
+    font-weight: bold;
     margin-left: 25px;
     transition: .2s;
 
@@ -53,6 +50,7 @@ body {
     height: 100vh;
     display: flex;
     align-items: center;
+    text-align: center;
     padding: 70px 10% 0;
 
 }
@@ -60,15 +58,17 @@ body {
 .home-content {
     max-width: 900px;
     margin: 20px 0 40px;
+    gap: 20px;
 
 }
 
 .home-content h1 {
 
     font-size: 48px;
-    font-weight: 700;
+    font-weight: bold;
     color: #000000;
     text-align: left;
+    padding-bottom: 20px;
 
 }
 
@@ -78,29 +78,25 @@ body {
     color: #000000;
     line-height: 1.5;
     text-align: left;
+    padding-bottom: 20px;
 
 }
 
 .btn-box {
     width: 150px;
-    height: 50px;
-    border: 2px solid #2D83A6;
-    border-radius: 8px;
-    font-size: 20px;
-    text-decoration: none;
-    font-weight: 600;
-    letter-spacing: 1px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
     position: center;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #2D83A6;
-
-
+    
 }
 
-
-.img_index {
-    display: table-cell;
-
+.btn-box a{
+    text-decoration: none;
+    color: white;
 }
